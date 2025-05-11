@@ -138,12 +138,13 @@ dataplaneProps.modelsRuntime.forEach((val, idx, array) => {
 });
 
 // Define initial managed node group for cluster components
+// Optimized for personal use - reduced to single node with smaller instance type
 const MngProps: blueprints.MngClusterProviderProps = {
-  minSize: 2,
-  maxSize: 2,
-  desiredSize: 2,
+  minSize: 1,
+  maxSize: 1,
+  desiredSize: 1,
   version: eks.KubernetesVersion.V1_31,
-  instanceTypes: [new ec2.InstanceType('m7g.large')],
+  instanceTypes: [new ec2.InstanceType('t4g.medium')],
   amiType: eks.NodegroupAmiType.AL2023_ARM_64_STANDARD,
   enableSsmPermissions: true,
   nodeGroupTags: {
