@@ -218,27 +218,4 @@ resource "aws_cloudwatch_dashboard" "sd_dashboard" {
   })
 }
 
-# 出力変数
-output "ec2_instance_id" {
-  value = aws_instance.sd_instance.id
-}
-
-output "ec2_public_ip" {
-  value = aws_instance.sd_instance.public_ip
-}
-
-output "ssh_command" {
-  value = "ssh -i /path/to/your/private_key.pem ec2-user@${aws_instance.sd_instance.public_ip}"
-}
-
-output "deployment_instructions" {
-  value = <<-EOT
-    SSH接続後に以下のコマンドを実行してデプロイを開始:
-    
-    cd /home/ec2-user/sd-project/deploy
-    bash ./deploy.sh
-    
-    デプロイが完了したら、AWS Management ConsoleでEKSクラスターの状態を確認し、
-    作成されたロードバランサーのDNS名を確認してStable Diffusion Web UIにアクセスできます。
-  EOT
-}
+# 出力変数は outputs.tf に移動しました
