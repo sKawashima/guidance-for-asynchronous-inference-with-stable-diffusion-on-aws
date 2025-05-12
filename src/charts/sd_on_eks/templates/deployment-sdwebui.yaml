@@ -44,7 +44,7 @@ spec:
           value: {{ quote .Values.runtime.inferenceApi.modelFilename }}
         {{- end }}
         - name: API_ONLY
-          value: "true"
+          value: "false"
         - name: CONFIG_FILE
           value: "/tmp/config.json"
         {{- if .Values.runtime.inferenceApi.commandArguments }}

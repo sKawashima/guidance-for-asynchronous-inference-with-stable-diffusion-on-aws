@@ -16,5 +16,10 @@ metadata:
   {{- end }}
 data:
   config.json: |
-    {"disable_mmap_load_safetensors": true}
+    {
+      "disable_mmap_load_safetensors": true,
+      "listen": "0.0.0.0",
+      "share": true,
+      "gradio_auth": ""
+    }
 {{- end }}
