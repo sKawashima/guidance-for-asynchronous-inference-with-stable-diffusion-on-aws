@@ -130,17 +130,11 @@ resource "aws_iam_instance_profile" "sd_profile" {
   role = aws_iam_role.sd_role.name
 }
 
-# SSHキーペア（実際のデプロイ時は既存のキーを使用する方が良い）
-resource "aws_key_pair" "deployer" {
-  key_name   = "sd-deployer-key"
-  public_key = var.ssh_public_key # 変数から読み込み
-}
-
 # EC2インスタンス
 resource "aws_instance" "sd_instance" {
   ami                    = var.ami_id # 変数から読み込み
   instance_type          = "t3.large" # 2vCPU, 8GBメモリ（デプロイ環境としては十分）
-  key_name               = aws_key_pair.deployer.key_name
+  key_name               = var.key_name # 既存のキー名を変数から指定
   subnet_id              = aws_subnet.public_subnet.id
   vpc_security_group_ids = [aws_security_group.sd_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.sd_profile.name

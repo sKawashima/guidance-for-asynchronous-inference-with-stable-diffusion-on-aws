@@ -20,13 +20,13 @@
 
 ### デプロイ手順
 
-1. **SSHキーの設定**
+1. **既存のSSHキーの指定**
 
-`variables.tf`ファイルを編集し、`ssh_public_key`変数にあなたのSSH公開鍵を設定します：
+`variables.tf`ファイルを編集し、`key_name`変数に既存のAWSキーペア名を設定します：
 
 ```hcl
-variable "ssh_public_key" {
-  default = "ssh-rsa AAAA..." # あなたの公開鍵
+variable "key_name" {
+  default = "your-existing-key-name" # AWSコンソールで確認できる既存のキーペア名
 }
 ```
 
@@ -50,16 +50,21 @@ terraform apply
 
 Terraformの実行が完了すると、出力に以下の情報が表示されます：
 - EC2インスタンスのパブリックIP
-- SSH接続コマンド
+- AWS Management Consoleからの接続URL
 - デプロイ手順
 
-4. **SSH接続とStable Diffusionのデプロイ**
+4. **AWS Management ConsoleからのEC2接続とデプロイ**
 
+Terraformの実行完了後に表示される`console_connect_url`を使用して、AWSコンソールから直接EC2インスタンスに接続できます。
+
+または、EC2コンソールで以下の手順で接続することも可能です：
+1. EC2ダッシュボードで該当のインスタンスを選択
+2. 「接続」ボタンをクリック
+3. 「EC2 Instance Connect」タブを選択
+4. 「接続」ボタンをクリックしてブラウザベースのターミナルを開く
+
+接続後、以下のコマンドを実行してデプロイを開始します：
 ```bash
-# SSHでEC2インスタンスに接続
-ssh -i /path/to/your/private_key.pem ec2-user@<EC2_PUBLIC_IP>
-
-# デプロイスクリプトの実行
 cd /home/ec2-user/sd-project/deploy
 bash ./deploy.sh
 ```
